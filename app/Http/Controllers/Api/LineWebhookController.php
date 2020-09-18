@@ -9,11 +9,20 @@ use LINE\LINEBot\Constant\HTTPHeader;
 use LINE\LINEBot\SignatureValidator;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
+use App\Services\StoreService;
+use App\User;
 use Exception;
 
 class LineWebhookController extends Controller
 {
 
+  private $store_service; // サービスクラスのprivate
+
+  // サービスクラスのコンストラクタ
+  public function __construct(StoreService $store_service)
+  {
+    $this->store = $store_service;
+  }
   public function webhook(Request $request)
   {
     $lineAccessToken = env('LINE_ACCESS_TOKEN', "");
@@ -32,10 +41,11 @@ class LineWebhookController extends Controller
     try {
       // イベント取得
       $events = $lineBot->parseEventRequest($request->getContent(), $signature);
-
       foreach ($events as $event) {
         // ハローと応答する
         $replyToken = $event->getReplyToken();
+        // リクエストに対して、DBの値と照会して値が同値ならば名前を返す。ない場合、名前を聞く。
+        $this->store->search($request->name);
         $helloMessage = new TextMessageBuilder("おいら、むらけん宜しくな！お前の名前教えてくれよ！w");
         $lineBot->replyMessage($replyToken, $helloMessage);
       }
