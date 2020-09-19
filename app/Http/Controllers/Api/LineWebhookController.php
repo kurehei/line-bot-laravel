@@ -45,19 +45,12 @@ class LineWebhookController extends Controller
       foreach ($events as $event) {
         $replyToken = $event->getReplyToken();
         // リクエストに対して、DBの値と照会して値が同値ならば名前を返す。ない場合、名前を聞く。
-        
+
         $message = $this->store->search($event->getText());
         $checkMessage = is_null($message) ? "nullやないかい": $message;
         $replyMessage = new TextMessageBuilder($checkMessage);
 
         //Log::info("エラー",$name);
-        //var_dump($request);
-        // if(is_null($name)) {
-        //   $message = new TextMessageBuilder("お前知らねえな、名前教えてくれよ。");
-        //   // 名前を保存する
-        //   //$this->store->store($request->name);
-        // }
-        //$helloMessage = new TextMessageBuilder("");
         $lineBot->replyMessage($replyToken, $replyMessage);
       }
     } catch (Exception $e) {
