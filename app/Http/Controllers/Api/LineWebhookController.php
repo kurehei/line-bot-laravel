@@ -10,6 +10,7 @@ use LINE\LINEBot\SignatureValidator;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use App\Services\StoreService;
+use Illuminate\Support\Facades\Log;
 use App\User;
 use Exception;
 
@@ -42,12 +43,22 @@ class LineWebhookController extends Controller
       // イベント取得
       $events = $lineBot->parseEventRequest($request->getContent(), $signature);
       foreach ($events as $event) {
-        // ハローと応答する
         $replyToken = $event->getReplyToken();
         // リクエストに対して、DBの値と照会して値が同値ならば名前を返す。ない場合、名前を聞く。
-        $this->store->search($request->name);
-        $helloMessage = new TextMessageBuilder("おいら、むらけん宜しくな！お前の名前教えてくれよ！w");
-        $lineBot->replyMessage($replyToken, $helloMessage);
+        
+        $message = $this->store->search($event->getText());
+        $checkMessage = is_null($message) ? "nullやないかい": $message;
+        $replyMessage = new TextMessageBuilder($checkMessage);
+
+        //Log::info("エラー",$name);
+        //var_dump($request);
+        // if(is_null($name)) {
+        //   $message = new TextMessageBuilder("お前知らねえな、名前教えてくれよ。");
+        //   // 名前を保存する
+        //   //$this->store->store($request->name);
+        // }
+        //$helloMessage = new TextMessageBuilder("");
+        $lineBot->replyMessage($replyToken, $replyMessage);
       }
     } catch (Exception $e) {
       // TODO 例外
