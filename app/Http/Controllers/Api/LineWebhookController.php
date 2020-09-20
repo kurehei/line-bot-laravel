@@ -33,7 +33,7 @@ class LineWebhookController extends Controller
     $signature = $request->headers->get(HTTPHeader::LINE_SIGNATURE);
     if (!SignatureValidator::validateSignature($request->getContent(), $lineChannelSecret, $signature)) {
       // TODO 不正アクセス
-      var_dump($signature);
+      Log::error('TEST LOG');
       return;
     }
 
@@ -51,7 +51,7 @@ class LineWebhookController extends Controller
         $checkMessage = is_null($message) ? "nullやないかい": $message;
         $replyMessage = new TextMessageBuilder($checkMessage);
 
-        //Log::info("エラー",$name);
+        Log::info("エラー", $replyMessage);
         $lineBot->replyMessage($replyToken, $replyMessage);
       }
     } catch (Exception $e) {
