@@ -33,6 +33,7 @@ class LineWebhookController extends Controller
     $signature = $request->headers->get(HTTPHeader::LINE_SIGNATURE);
     if (!SignatureValidator::validateSignature($request->getContent(), $lineChannelSecret, $signature)) {
       // TODO 不正アクセス
+      var_dump($signature);
       return;
     }
 
