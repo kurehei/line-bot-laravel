@@ -31,7 +31,7 @@ class StoreService {
     $user = DB::table('users')->where('name', 'like', "%{$name}%")->first();
 
     // 照会したユーザーがnullかどうか判定
-    return is_null($user) ? "お前の名前知らないなあ、名前教えてくれよ！！" : $user."じゃん、久しぶりだなあ";
+    return is_null($user) ? "お前の名前知らないなあ、名前教えてくれよ！！" : $user->name."じゃん、久しぶりだなあ";
   }
 }
 ?>
