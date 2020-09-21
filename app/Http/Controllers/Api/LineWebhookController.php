@@ -52,7 +52,7 @@ class LineWebhookController extends Controller
         $replyMessage = new TextMessageBuilder("aaaa");
 
         $a = $lineBot->replyMessage($replyToken, $replyMessage);
-        Log::info(var_export($a, true));
+        Log::info(var_export($replyToken, true));
 
       }
     } catch (Exception $e) {
