@@ -6,22 +6,32 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 
 class StoreService {
-  // DBを名前に保存する
+
+  private function filterName($name) {
+   $name = substr($name, 0, 4);
+   return $name;
+  }
+
+  // DBに名前を保存する
   public function store($name) {
     $user = new User;
+    $name = $this->filterName($name);
     $user->name = $name;
     // 保存に成功したかどうかの判定
-    return $user->save()? $user: "保存に失敗しました";
+    if(!$user->save()) {
+      return "保存に失敗しました";
+    }
+
+    $user = DB::table('users')->orderBy('id', 'desc')->first();
+    return $user."だな宜しくな！！";
   }
 
   // リクエストの値とDBを照会する。
   public function search($name) {
     $user = DB::table('users')->where('name', 'like', "%{$name}%")->first();
 
-    //$user = $name == "むらかみ" ? $name : null;
     // 照会したユーザーがnullかどうか判定
-    $reply = is_null($user) ? "お前の名前知らないなあ、名前教えてくれよ！！" : $user."じゃん、久しぶりだなあ";
-    return $reply;
+    return is_null($user) ? "お前の名前知らないなあ、名前教えてくれよ！！" : $user."じゃん、久しぶりだなあ";
   }
 }
 ?>
