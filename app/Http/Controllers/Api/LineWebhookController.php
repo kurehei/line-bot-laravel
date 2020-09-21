@@ -49,16 +49,16 @@ class LineWebhookController extends Controller
 
         $message = $this->store->search($event->getText());
 
-        if($event->getText() === "教える") {
+        if($event->getText() == "教える") {
           $message = "名前: ◯◯って感じで教えてくれ";
         }
-        else if($event->getText() === "名前:"){
+        else if($event->getText() == "名前:"){
           $message = $this->store->store($event->getText());
         }
         else {
-          break;
+          $message = $message;
         }
-        
+
         $checkMessage = is_null($message) ? "nullやないかい": $message;
         $replyMessage = new TextMessageBuilder($checkMessage);
 
