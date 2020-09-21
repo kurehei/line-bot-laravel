@@ -18,6 +18,7 @@ class StoreService {
   public function store($name) {
     $user = new User;
     $name = $this->filterName($name);
+    Log::info(var_export($name, true));
     $user->name = $name;
     // 保存に成功したかどうかの判定
     if(!$user->save()) {
