@@ -51,7 +51,7 @@ class LineWebhookController extends Controller
         $checkMessage = is_null($message) ? "nullやないかい": $message;
         $replyMessage = new TextMessageBuilder($checkMessage);
 
-        Log::info("エラー");
+        Log::info($replyMessage);
         $lineBot->replyMessage($replyToken, $replyMessage);
       }
     } catch (Exception $e) {
