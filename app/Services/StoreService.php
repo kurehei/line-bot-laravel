@@ -4,6 +4,8 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
 use App\User;
+use Illuminate\Support\Facades\Log;
+
 
 class StoreService {
 
@@ -21,9 +23,8 @@ class StoreService {
     if(!$user->save()) {
       return "保存に失敗しました";
     }
-
     $user = DB::table('users')->orderBy('id', 'desc')->first();
-    return $user."だな宜しくな！！";
+    return $user->name."だな宜しくな！！";
   }
 
   // リクエストの値とDBを照会する。
