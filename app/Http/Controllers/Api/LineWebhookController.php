@@ -53,7 +53,7 @@ class LineWebhookController extends Controller
 
 
         $lineBot->replyMessage($replyToken, $replyMessage);
-        Log::info("エラー");
+        Log::info("エラー",[$replyMessage]);
       }
     } catch (Exception $e) {
       // TODO 例外
