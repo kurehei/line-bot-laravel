@@ -56,9 +56,9 @@ class LineWebhookController extends Controller
           //strpos($xample,'bc') 特定の文字列を含むかどうかのチェック　含まない場合 => false
           $message = $this->store->store($event->getText());
         }
-        else if(strrpos($event->getText(),'ピ') !== false){
+        else if(strrpos($event->getText(),'どういうこと') !== false){
           //strpos($xample,'bc') 特定の文字列を含むかどうかのチェック　含まない場合 => false
-          $message = "ピンサロ?";
+          $message = "しょうがねーなー";
         }
         else {
           $message = $message;
