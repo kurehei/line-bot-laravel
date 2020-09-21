@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 class StoreService {
 
   private function filterName($name) {
-   $name = substr($name, 0, 4);
+   $name = str_replace('名前: ','',$name);
    return $name;
   }
 
