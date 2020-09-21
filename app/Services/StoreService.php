@@ -16,9 +16,9 @@ class StoreService {
 
   // リクエストの値とDBを照会する。
   public function search($name) {
-    //$user = DB::table('users')->where('name', 'like', "%{$name}%")->first();
+    $user = DB::table('users')->where('name', 'like', "%{$name}%")->first();
 
-    $user = $name == "むらかみ" ? $name : null;
+    //$user = $name == "むらかみ" ? $name : null;
     // 照会したユーザーがnullかどうか判定
     $reply = is_null($user) ? "お前の名前知らないなあ、名前教えてくれよ！！" : $user."じゃん、久しぶりだなあ";
     return $reply;
