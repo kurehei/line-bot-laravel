@@ -11,10 +11,6 @@
 |
 */
 
-$app->configureMonologUsing(function ($monolog) {
-    $monolog->pushHandler(new \Monolog\Handler\StreamHandler('php://stderr'));
-});
-
 $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
